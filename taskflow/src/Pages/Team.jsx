@@ -1,7 +1,7 @@
 const Team = () => {
     return (
         <>
-        <h3>hhk</h3>
+        <h3>welcome to our team jatin</h3>
         </>
     )
 }
