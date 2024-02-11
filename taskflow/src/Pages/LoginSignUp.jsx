@@ -1,4 +1,10 @@
+import { useNavigate } from "react-router-dom"
 const LoginSignUp = () => { 
+    const navigatetodemo= useNavigate()
+   const handleSubmit = async(event)=> {
+    event.preventDefault()
+    navigatetodemo('/demo')
+   }
     return (
         <>
         <div className="navlogo">
@@ -6,12 +12,17 @@ const LoginSignUp = () => {
                
 
             </div>
+            <div>
+
+                Let's start by creating 
+            </div>
+            <div>your personal space</div>
         <div>
             <h2>Login Page</h2>
             <p> Hi name!
                 Nice to see you again
             </p>
-            <form>
+            <form onSubmit={handleSubmit}>
                 
                 <div>
                     <label htmlFor="email">Email</label>

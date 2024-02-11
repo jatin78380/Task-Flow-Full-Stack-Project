@@ -42,7 +42,7 @@ const Navbar = ()=>{
                 <button onClick={navigationtoCreatingTask}>Check Demo</button>
                 
             </nav>
-            <Features createTask={navigationtoCreatingTask} />
+            
         </div>
     )
 
