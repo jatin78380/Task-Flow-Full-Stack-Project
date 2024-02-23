@@ -5,6 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 
 import CreatingTask from '../../Pages/CreatingTask'
 import Features from '../../Pages/Features'
+import Register from '../../Pages/Register';
 
 const Home = ()=>{
     const navigatetologinPage = useNavigate()
@@ -25,10 +26,11 @@ const Home = ()=>{
     navigatetoCreatingTask('/demo')
   }
 function navigationtoregisterationPage(){
-  navigatetoregPage('/registeration')
+  navigatetoregPage('/register')
 }
     return (
       <div className='home'>
+        
         
  <div className='navbar'>
  <ul className="nav-menu">
@@ -36,7 +38,7 @@ function navigationtoregisterationPage(){
    <li onClick={navigationtofeaturesPage} >  Features</li>
            <li onClick={navigationtoteamPage}>Team</li>
            <li onClick={navigationtologinPage}>Login </li>
-           <li onClick={navigationtoregisterationPage}>Register</li>
+           <li onClick={navigationtoregisterationPage}>Register</li> 
            <button className='btn1_demo' onClick={navigationtoCreatingTask}>Check Demo</button>
 
    </ul>     

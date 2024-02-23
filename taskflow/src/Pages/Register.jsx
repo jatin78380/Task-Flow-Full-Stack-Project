@@ -1,73 +1,65 @@
 import { set } from "mongoose"
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import {useState} from'react'
 
 import axios from "axios";
 const Register = () => {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("") 
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
     const navigate= useNavigate();
-
-   const handleSubmit = async(event)=> {
-    event.preventDefault();
-    
-    try {
-        const response = await axios.post(
-          "http://localhost:3001/register",
-          { name, email, password } 
-        );
-  
-        
-        console.log("Registration successful:", response.data);
-        navigate("/login"); 
-  
-      } catch (error) {
-        console.error("Registration failed:", error);
-       
-      }
    
-   }
+    const handleSubmit =(e) => { 
+        e.preventDefault();
+        axios.post('http://localhost:3001/auth/register', {name, email, password})
+        .then(response => {
+          if(response.data.status){
+            navigate('/login')
+          }
+           
+
+        })
+        .catch(err => console.error(err));
+    }
   
     return (
         <>
         <div>
+              
+            <div className="header">
 
-        <div className="navlogo">
-                <img src="" alt="logo_image"></img>
-                </div>
+              <div>
+              <div className="logo"><img src="" alt="logo_img" className="logo" /></div>
+              </div>
+              <div className="hlog">
+                <h1>Let's start by creating your personal space</h1>
+              </div>
+              
+              <div className="name">
+                <label htmlFor="name">Name </label>
+                <input type="text"  id="" onChange={(e) => setName(e.target.value)} />
+              </div>
+              <div className="regd">
+                <label htmlFor="email">Email:</label>
+                <input type="email" placeholder="" autoComplete="off" onChange={(e) => setEmail(e.target.value)} />
+              </div>
+              <div>
+                <label htmlFor="password">Password: </label>
+                <input type="password" onChange={(e) => setPassword(e.target.value)} />
+              </div>
+              
+              <div >
+                <button onClick={handleSubmit} className="btnlog"> Start using Taskflow</button>
+              </div>
+              <div className="login">
+                <p>Already registered? <Link to="/login">Login</Link></p> 
+              </div>
+              <div className="img"><img src="" alt="reg_img" /></div>
 
-
-            
-            <div> <p> Let's start by creating your personal space </p></div>
-        <div>
-            <h2>Registeration Page</h2>
-            <p> Hi name! Nice to see you again
-            </p>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="name">Name</label>
-                    <input type="text" name="name" autoComplete="off" placeholder="Enter name" onChange={(e)=>setName(e.target.value)}/>
-                </div>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input type="email"  name="email" autoComplete="off" placeholder="Enter email" onChange={(e)=>setEmail(e.target.value)} />
-                   
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input type="password" name="password"  placeholder="Enter password" onChange={(e)=>setPassword(e.target.value)} />
-                   
-                </div>
-                <button onClick={handleSubmit} className="btn-login">Register to use TaskFlow</button>
-                <div>
-                    <input type="checkbox" name="tick" />
-                    <label htmlFor="password">You are agree with terms & conditions</label>
-                </div>
-            </form>
-            <div className="drgn"> <img src="" alt="drgn" /> </div>
-        </div>
-        <footer className="footers"> TaskFlow - BayArea Hacks 2.0 - 2024</footer>
-    
+            </div>
+            <footer className='footers'> TaskFlow- BayArea Hacks 2.0 - 2024</footer>
+       
         </div>
         
         </>

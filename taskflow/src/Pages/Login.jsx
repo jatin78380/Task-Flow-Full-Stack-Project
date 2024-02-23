@@ -1,35 +1,67 @@
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
-const Login = () => {
-    const navigate = useNavigate();
-    const navigationtotask = () => {
-        navigate('/demo');
-    };
- return (
-    <>
-   <div>
-        <div>
-            <div>  
-                  <div> <img src="" alt="logo" /> </div>
-                  <div className="colslog">
-                  <div> <h1 className='hlog'>Hi ! Nice to see you again.</h1> </div>
-                <div> <label htmlFor="email" className='emailpass' >Email:</label> 
-                   <input type='email'></input>
-                   </div>
-                    <div> <label htmlFor="password"  className='emailpass'>Password:</label>
-                  <input type='password'></input></div>
-                  <div>
-                    <button className='btnlog' onClick={navigationtotask}>Continue to TaskFlow</button></div>
-            </div>
-            <div className='dnln'> <img src='' alt='doinglogin'/> </div>
+import { set } from "mongoose"
 
-                  </div>
-               
+import { Link } from 'react-router-dom';
+import {useState} from'react'
+const Login = () => {
+ 
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const navigate= useNavigate();
+ axios.defaults.withCredentials = true;
+
+  const handleSubmit =(e) => { 
+      e.preventDefault();
+      axios.post('http://localhost:3001/login', { email, password})
+      .then(result => {
+        if(result.data ==="Success"){
+          navigate('/demo')
+        }
+         
+
+      })
+      .catch(err => console.error(err));
+  }
+ return (
+  <>
+  <div>
+        
+      <div className="header">
+
+        <div>
+        <div className="logo"><img src="" alt="logo_img" className="logo" /></div>
         </div>
-    
-    <footer className='footers'> TaskFlow- BayArea Hacks 2.0 - 2024</footer>
-    </div> 
-    </>
+        <div className="hlog">
+          <h1>Let's start by creating your personal space</h1>
+        </div>
+        <div className="regd">
+          <label htmlFor="email">Email:</label>
+          <input type="email" placeholder="" autoComplete="off" onChange={(e) => setEmail(e.target.value)} />
+        </div>
+        <div>
+          <label htmlFor="password">Password: </label>
+          <input type="password" onChange={(e) => setPassword(e.target.value)} />
+        </div>
+        
+        <div >
+          <button onClick={handleSubmit} className="btnlog"> Continue to Taskflow</button>
+        </div>
+        <div className="regiter">
+          <p>Don't Have Account? <Link to="/register">Register</Link></p>
+        </div>
+        <div className="img"><img src="" alt="reg_img" /></div>
+
+      </div>
+      <footer className='footers'> TaskFlow- BayArea Hacks 2.0 - 2024</footer>
+ 
+  </div>
+  
+  </>
  )
 
 }
 export default Login;
+
+
+
