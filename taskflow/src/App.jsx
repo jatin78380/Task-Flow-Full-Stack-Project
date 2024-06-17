@@ -1,36 +1,56 @@
-import { useState } from 'react'
-import { BrowserRouter,Route, Routes } from'react-router-dom';
-import './index.css'
+import React, { useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2';
 
-import Features from './Pages/Features';
-import Team from './Pages/Team';  
-import Register from './Pages/Register';
-import CreatingTask from './Pages/CreatingTask';
-import Home from './Components/Navbar/Home'
-import Login from './Pages/Login';
-import CheckDemo from './Pages/CheckDemo';
+const App = () => {
+  const [waterLevelData, setWaterLevelData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: 'Water Level',
+        data: [],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  });
 
-function App() {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Adjust data fetching logic based on your backend/communication chosen
+        const response = await axios.get('https://your-backend-api-endpoint'); // Replace with your endpoint
+        const waterLevels = response.data; // Adjust access based on your data structure
+
+        // Update chart data with fetched values
+        setWaterLevelData({
+          labels: waterLevels.map((level) => level.timestamp), // Extract timestamps from data
+          datasets: [
+            {
+              label: 'Water Level',
+              data: waterLevels.map((level) => level.value), // Extract water level values
+            },
+          ],
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+
+    // Update data periodically (adjust interval as needed)
+    const intervalId = setInterval(fetchData, 5000); // Update every 5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, []);
 
   return (
     <>
-
-   <BrowserRouter>
-      <Routes>
-      <Route path='/' element={<Home/>}> </Route>
-      <Route path='/features' element={<Features/>}> </Route>
-      <Route path='/team' element={<Team/>}> </Route>
-      <Route path='/login' element={<Login/>}> </Route>
-
-      <Route path='/register' element={<Register/>}> </Route>
-
-      <Route path='/demo' element={<CheckDemo/>}></Route>
-      <Route path='/create' element={<CreatingTask/>}></Route>
-      </Routes>
-      </BrowserRouter>
-
+    <
     </>
-  )
-}
+    
+  );
+};
 
-export default App
+export default App;
